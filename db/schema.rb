@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_20_132420) do
+ActiveRecord::Schema.define(version: 2019_11_20_155542) do
+
+  create_table "money", force: :cascade do |t|
+    t.string "expand_type"
+    t.string "title"
+    t.integer "amount"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

@@ -6,38 +6,55 @@
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
 import Vue from 'vue/dist/vue.esm.js'
+import axios from 'axios'
 
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
-  el: '#app',
-  data: {
-    expand_type: '-',
-    title: '',
-    amount: '',
-    description: '',
-    items: [
-      {id: 1, expand_type: '-', title: '買手機', amount: 20000, description: "Hello"},
-      {id: 2, expand_type: '-', title: '買書', amount: 1000, description: "World"}
-    ]
-  },
-  methods: {
+    el: '#app',
+    data: {
+      expand_type: '-',
+      title: '',
+      amount: '',
+      description: '',
+      items: [
+        {id: 1, expand_type: '-', title: '買手機', amount: 20000, description: "Hello"},
+        {id: 2, expand_type: '-', title: '買書', amount: 1000, description: "World"}
+      ]
+    },
+    // created: {
+    //   this.fetchItems()
+    // },
+
+    methods: {
+
+      // fetchItems(){
+      //   const resource = this.$resource('app.json/{ id }')
+      //   resource.get().then(responce => this.items = responce.data)
+      // },
+
     clear() {
       this.expand_type = '-'
       this.title = ''
       this.amount = ''
       this.description = ''
+      // axios.get('api/money', items)
     },
+
     addItem(evt) {
       evt.preventDefault()
-      let cc = {
-        id: 3, 
+      let item = { 
         expand_type: this.expand_type, 
         title: this.title, 
         amount: this.amount, 
         description: this.description
       }
-      this.items.unshift(cc)
+      axios.post('/api/money', item)
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+      
+      this.items.unshift(item)
+
       this.clear()
     }
   },
@@ -56,7 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
       },0)
     }
   }
-})
+  
+
+  })
 })
 
 
